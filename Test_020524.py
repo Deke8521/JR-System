@@ -65,11 +65,11 @@ def load_job_dataset():
     try:
         json_url = "https://raw.githubusercontent.com/Deke8521/JR-System/main/shining-axis-422110-r0-984a9d3ffe23.json"
         response = requests.get(json_url)
-        print(response.json())
+        #print(response.json())
         # Create a client to interact with Google Cloud Storage
         key_path = "shining-axis-422110-r0-984a9d3ffe23.json"
 
-        client = storage.Client.from_service_account_json(key_path)
+        client = storage.Client.from_service_account_json(response.json())
 
         # Specify the bucket name and the path to the file within the bucket
         bucket_name = 'job_dataset'
