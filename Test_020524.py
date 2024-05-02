@@ -1,9 +1,6 @@
-
 import pandas as pd
 from google.cloud import storage
 import streamlit as st
-from google.cloud import storage
-import io
 from io import BytesIO
 import PyPDF2
 import docx
@@ -12,7 +9,6 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-import re
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.stem import WordNetLemmatizer
@@ -67,6 +63,9 @@ def clean_text(text):
 @st.cache_data(persist=True)
 def load_job_dataset():
     try:
+        json_url = "https://raw.githubusercontent.com/Deke8521/JR-System/main/shining-axis-422110-r0-984a9d3ffe23.json"
+        response = requests.get(json_url)
+        print(response.json())
         # Create a client to interact with Google Cloud Storage
         key_path = "shining-axis-422110-r0-984a9d3ffe23.json"
 
