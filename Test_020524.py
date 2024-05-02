@@ -68,7 +68,7 @@ def clean_text(text):
 def load_job_dataset():
     try:
         # Create a client to interact with Google Cloud Storage
-        key_path = r"C:\Users\dekea\Downloads\shining-axis-422110-r0-984a9d3ffe23.json"
+        key_path = "https://github.com/Deke8521/JR-System/edit/main/shining-axis-422110-r0-984a9d3ffe23.json"
         client = storage.Client.from_service_account_json(key_path)
 
         # Specify the bucket name and the path to the file within the bucket
@@ -106,7 +106,7 @@ def load_job_dataset():
 
 # Main function
 def main():
-    st.image(r"C:\Users\dekea\OneDrive - University of Wolverhampton\Pictures\Screenshots\Screenshot 2024-04-28 205652.jpeg", use_column_width=True, width=100)
+    st.image("https://github.com/Deke8521/JR-System/edit/main/Screenshot 2024-04-28 205652.jpeg", use_column_width=True)
    
     st.title("Job Recommendation App")
     
