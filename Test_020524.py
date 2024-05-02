@@ -69,6 +69,7 @@ def load_job_dataset():
     try:
         # Create a client to interact with Google Cloud Storage
         key_path = "https://raw.githubusercontent.com/Deke8521/JR-System/main/shining-axis-422110-r0-984a9d3ffe23.json"
+
         client = storage.Client.from_service_account_json(key_path)
 
         # Specify the bucket name and the path to the file within the bucket
