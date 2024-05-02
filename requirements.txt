@@ -6,6 +6,6 @@ streamlit
 pandas 
 matplotlib
 seaborn 
-google.cloud
+google-cloud-storage
 io
 re
