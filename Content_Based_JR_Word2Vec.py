@@ -192,5 +192,7 @@ def main():
                     plt.tight_layout()
                     st.pyplot(fig)
 
+                    st.write("Your feedback or suggestions for improvement are important to us, please fill out our [feedback form](https://forms.gle/ddGeJRrkuTosLww58).")
+
 if __name__ == "__main__":
     main()
