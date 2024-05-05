@@ -6,4 +6,4 @@ streamlit
 pandas 
 matplotlib
 seaborn 
-google-cloud-storage==1.44.0
+requests==2.26.0
