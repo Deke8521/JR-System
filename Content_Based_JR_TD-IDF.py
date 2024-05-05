@@ -171,7 +171,7 @@ def main():
                 # Display recommended jobs in a table
                 st.subheader("Top 10 Recommended Jobs Using TF-IDF:")
                 table_data = [{"Job Title": job, "Company": company, "Similarity Score": score} for job, company, score in sorted_jobs]
-                st.table(pd.DataFrame(modified_table_data, index=range(1, 11)))
+                st.table(pd.DataFrame(table_data, index=range(1, 11)))
 
                 # Plot the line plot
                 st.header("Line Plot Showing the Similarity Scores for Recommended Jobs using TF-IDF")
