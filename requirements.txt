@@ -7,3 +7,4 @@ pandas
 matplotlib
 seaborn 
 requests==2.26.0
+gensim
