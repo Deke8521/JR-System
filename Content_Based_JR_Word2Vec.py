@@ -111,7 +111,7 @@ def load_job_dataset():
 
 # Main function
 def main():
-    st.image(r"C:\Users\dekea\OneDrive - University of Wolverhampton\Pictures\Screenshots\Screenshot 2024-04-28 205652.jpeg", use_column_width=True, width=100)
+    st.image("https://raw.githubusercontent.com/Deke8521/JR-System/main/Screenshot%202024-04-28%20205652.png", use_column_width=True, width=100)
     st.title("Job Recommendation App")
     job_dataset = load_job_dataset()
 
