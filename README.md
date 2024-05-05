@@ -1,1 +1,1 @@
-# JR-System
+This is a job recommender system that recommend jobs to users based on their skills. The job seekers resume is uploaded and the top 10 jobs are recommended based on similarity scores to what is on the resume.
