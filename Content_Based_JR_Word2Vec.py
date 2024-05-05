@@ -179,7 +179,7 @@ def main():
                     # Display recommended jobs in a table
                     st.subheader("Top 10 Recommended Jobs Using Word2Vec:")
                     table_data = [{"Job Title": job, "Company": company, "Similarity Score": score} for job, company, score in zip(top_n_jobs['jobtitle'], top_n_jobs['company'], top_n_jobs['similarity_score'])]
-                    st.table(pd.DataFrame(table_data))
+                    st.table(pd.DataFrame(table_data, index=range(1, 11)))
 
                     #Plot the line chart
                     st.header("Line Chart Showing the Similarity Scores for Recommended Jobs Using Word2Vec")
