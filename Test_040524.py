@@ -18,6 +18,12 @@ import zipfile
 import io
 import csv
 
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+
+
+
 # Function to download the zip file and extract the CSV
 def process_github_zip(url, csv_file_name):
     response = requests.get(url)
