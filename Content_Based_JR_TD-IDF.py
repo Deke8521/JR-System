@@ -111,7 +111,7 @@ def load_job_dataset():
 
 # Main function
 def main():
-    st.image("https://raw.githubusercontent.com/Deke8521/JR-System/main/Screenshot%202024-04-28%20205652.png")
+    st.image("https://raw.githubusercontent.com/Deke8521/JR-System/main/Screenshot%202024-04-28%20205652.png", use_column_width=True, width=100)
     st.title("Job Recommendation App")
     
     
