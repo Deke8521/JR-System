@@ -191,8 +191,8 @@ def main():
                 st.table(pd.DataFrame(table_data, index=range(1, 11)))
 
 
-                # Plot the bar plot
-                st.header("Bar Plot Showing the Similarity Scores for Recommended Jobs using Count Vectorizer")
+                # Plot the dot plot
+                st.header("Dot Plot Showing the Similarity Scores for Recommended Jobs using Count Vectorizer")
                 job_titles = [job for job, _, _, _ in sorted_jobs]
                 similarity_scores = [score for _, _, _,  score in sorted_jobs]
                 recommended_jobs_df = pd.DataFrame({'Job Title': job_titles, 'Similarity Score': similarity_scores})
