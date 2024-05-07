@@ -185,17 +185,29 @@ def main():
                     table_data = [{"Job Title": job, "Company": company, "Advertiser URL": url} for job, company, url in zip(top_n_jobs['jobtitle'], top_n_jobs['company'], top_n_jobs['advertiserurl'])]
                     st.table(pd.DataFrame(table_data, index=range(1, 11)))
 
-                    #Plot the line chart
-                    st.header("Line Chart Showing the Similarity Scores for Recommended Jobs Using Word2Vec")
+                    # Plot the dot plot
+                    st.header("Dot Plot Showing the Similarity Scores for Recommended Jobs Using Word2Vec")
                     fig, ax = plt.subplots(figsize=(10, 6))
-                    ax.plot(top_n_jobs['jobtitle'], top_n_jobs['similarity_score'], marker='o')
+
+                    # Plot the dots
+                    dots = ax.scatter(top_n_jobs['jobtitle'], top_n_jobs['similarity_score'], color='skyblue', s=100)
+
+                    # Set labels and title
                     ax.set_xlabel('Job Title')
                     ax.set_ylabel('Similarity Score')
                     ax.set_title('Similarity Scores for Recommended Jobs')
+
+                    # Rotate x-axis labels for better readability
                     ax.tick_params(axis='x', rotation=45)
+
+                    # Ensure tight layout
                     plt.tight_layout()
+
+                    # Display the plot
                     st.pyplot(fig)
-                    
+
+
+
                     
                                         
                     st.write("If you have any feedback or suggestions for improvement, please fill out our [feedback form](https://forms.gle/ddGeJRrkuTosLww58).")
