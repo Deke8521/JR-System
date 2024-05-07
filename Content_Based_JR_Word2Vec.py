@@ -179,7 +179,7 @@ def main():
                     average_similarity_score = top_n_jobs['similarity_score'].mean()
                     st.write(f"Average Similarity Score: {average_similarity_score :.4f}")
 
-                    # Display recommended jobs in a table
+                    
                     # Display recommended jobs in a table
                     st.subheader("Top 10 Recommended Jobs Using Word2Vec:")
                     table_data = [{"Job Title": job, "Company": company, "Advertiser URL": url} for job, company, url in zip(top_n_jobs['jobtitle'], top_n_jobs['company'], top_n_jobs['advertiserurl'])]
@@ -188,7 +188,9 @@ def main():
                     #Plot the line chart
                     st.header("Bar Chart Showing the Similarity Scores for Recommended Jobs Using Word2Vec")
                     fig, ax = plt.subplots(figsize=(10, 6))
-                    ax.bar(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'])
+                   
+                    # Plot the bars
+                    bars = ax.bar(top_n_jobs['Job Title'], top_n_jobs['similarity_score'])
                     
                     # Set labels and title
                     ax.set_xlabel('Job Title')
