@@ -177,30 +177,26 @@ def main():
                 table_data = [{"Job Title": job, "Company": company, "Advertiser URL": url} for job, company, url, _ in sorted_jobs]
                 st.table(pd.DataFrame(table_data, index=range(1, 11)))
 
-                # Plot the bar plot
-                st.header("Bar Plot Showing the Similarity Scores for Recommended Jobs using TF-IDF")
-                job_titles = [job for job, _, _, _ in sorted_jobs]
-                similarity_scores = [score for _, _, _, score in sorted_jobs]
-                advertiser_urls = [url for _, _, url, _ in sorted_jobs]
-                recommended_jobs_df = pd.DataFrame({'Job Title': job_titles, 'Similarity Score': similarity_scores, 'Advertiser URL': advertiser_urls})
+                # Plot the dot plot
+                st.header("Dot Plot Showing the Similarity Scores for Recommended Jobs using TF-IDF")
                 fig, ax = plt.subplots(figsize=(10, 6))
-                ax.bar(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'])
                 
-                # Adjust the width of the bars
-                bar_width = 0.3  # Adjust this value to make the bars thinner or thicker
-
+                # Plot the dots
+                dots = ax.scatter(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'], color='skyblue', s=100)
+                
                 # Set labels and title
                 ax.set_xlabel('Job Title')
                 ax.set_ylabel('Similarity Score')
                 ax.set_title('Similarity Scores for Recommended Jobs using TF-IDF')
-
+                
                 # Rotate x-axis labels for better readability
                 ax.tick_params(axis='x', rotation=45)
-
+                
                 # Ensure tight layout
                 plt.tight_layout()
-
+                
                 # Display the plot
                 st.pyplot(fig)
+
 if __name__ == "__main__":
     main()
