@@ -191,21 +191,18 @@ def main():
                 st.table(pd.DataFrame(table_data, index=range(1, 11)))
 
 
-                # Plot the line plot
+                # Plot the bar plot
                 st.header("Bar Plot Showing the Similarity Scores for Recommended Jobs using Count Vectorizer")
                 job_titles = [job for job, _, _, _ in sorted_jobs]
                 similarity_scores = [score for _, _, _,  score in sorted_jobs]
                 recommended_jobs_df = pd.DataFrame({'Job Title': job_titles, 'Similarity Score': similarity_scores})
 
-    # Create a line plot
-                # Create a line plot
+                # Create a bar plot
+                # Create a bar plot
                 fig, ax = plt.subplots(figsize=(10, 6))
                 ax.bar(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'], marker='o')
-                # Adjust the width of the bars
-                bar_width = 0.3 
-                # Plot the bars
-                bars = ax.bar(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'], color=colors, width=bar_width)
-
+               
+                
                 # Set labels and title
                 ax.set_xlabel('Job Title')
                 ax.set_ylabel('Similarity Score')
