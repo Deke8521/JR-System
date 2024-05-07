@@ -197,25 +197,24 @@ def main():
                 similarity_scores = [score for _, _, _,  score in sorted_jobs]
                 recommended_jobs_df = pd.DataFrame({'Job Title': job_titles, 'Similarity Score': similarity_scores})
 
-                # Create a bar plot
-                # Create a bar plot
+                # Create a dot plot
                 fig, ax = plt.subplots(figsize=(10, 6))
-                ax.bar(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'], marker='o')
-               
+                ax.scatter(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'], color='skyblue')
                 
                 # Set labels and title
                 ax.set_xlabel('Job Title')
                 ax.set_ylabel('Similarity Score')
                 ax.set_title('Similarity Scores for Recommended Jobs using Count Vectorizer')
-
+                
                 # Rotate x-axis labels for better readability
                 ax.tick_params(axis='x', rotation=45)
-
+                
                 # Ensure tight layout
                 plt.tight_layout()
-
+                
                 # Display the plot
                 st.pyplot(fig)
+
 
 
 if __name__ == "__main__":
