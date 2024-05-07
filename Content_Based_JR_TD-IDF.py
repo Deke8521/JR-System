@@ -172,32 +172,42 @@ def main():
                 average_similarity_score = total_similarity_score / len(sorted_jobs)
                 st.write(f"Average Similarity Score: {average_similarity_score:.4f}")
 
-             
                 # Display recommended jobs in a table
                 st.subheader("Top 10 Recommended Jobs Using TF-IDF:")
                 table_data = [{"Job Title": job, "Company": company, "Advertiser URL": url} for job, company, url, _ in sorted_jobs]
                 st.table(pd.DataFrame(table_data, index=range(1, 11)))
 
-
-
-                # Plot the line plot
-                st.header("Line Plot Showing the Similarity Scores for Recommended Jobs using TF-IDF")
+                # Plot the bar plot
+                st.header("Bar Plot Showing the Similarity Scores for Recommended Jobs using TF-IDF")
                 job_titles = [job for job, _, _, _ in sorted_jobs]
                 similarity_scores = [score for _, _, _, score in sorted_jobs]
-
-                recommended_jobs_df = pd.DataFrame({'Job Title': job_titles, 'Similarity Score': similarity_scores})
-
-    # Create a line plot
+                advertiser_urls = [url for _, _, url, _ in sorted_jobs]
+                recommended_jobs_df = pd.DataFrame({'Job Title': job_titles, 'Similarity Score': similarity_scores, 'Advertiser URL': advertiser_urls})
                 fig, ax = plt.subplots(figsize=(10, 6))
-                ax.plot(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'], marker='o')
+                ax.bar(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'])
+                
+                # Adjust the width of the bars
+                bar_width = 0.3  # Adjust this value to make the bars thinner or thicker
+
+                # Plot the bars with logarithmic scale
+                bars = ax.bar(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'],  width=bar_width)
+
+                # Set logarithmic scale for y-axis
+                ax.set_yscale('log')
+
+
+                # Set labels and title
                 ax.set_xlabel('Job Title')
                 ax.set_ylabel('Similarity Score')
                 ax.set_title('Similarity Scores for Recommended Jobs using TF-IDF')
+
+                # Rotate x-axis labels for better readability
                 ax.tick_params(axis='x', rotation=45)
+
+                # Ensure tight layout
                 plt.tight_layout()
 
                 # Display the plot
                 st.pyplot(fig)
-
 if __name__ == "__main__":
     main()
