@@ -91,9 +91,9 @@ def load_job_dataset():
         # Load job data from GitHub
         job_data = process_github_zip(github_zip_url, 'dice_com-job_us_sample.csv')
         
-        job_dataset = job_data[['company', 'jobid', 'jobtitle','jobdescription', 'skills']].copy()
+        job_dataset = job_data[['company', 'jobid', 'jobtitle','jobdescription', 'skills', 'advertiserurl']].copy()
         # Check for null values in specific columns
-        null_values = job_dataset[['company', 'jobid', 'jobtitle', 'jobdescription', 'skills']].isnull().sum()
+        null_values = job_dataset[['company', 'jobid', 'jobtitle', 'jobdescription', 'skills', 'advertiserurl']].isnull().sum()
         print("Null values in each column:")
         print(null_values)
         # Remove NA values from job profile
@@ -102,8 +102,11 @@ def load_job_dataset():
         job_dataset['Skills'] = job_dataset['skills'] + ';' + job_dataset['jobdescription']  # Combine 'skills' and 'jobdescription' columns
         # Drop redundant columns
         job_dataset.drop(columns=['skills', 'jobdescription'], inplace=True)
-        # Apply clean_text function to the entire job_dataset
-        job_dataset = job_dataset.map(clean_text)
+        # Apply clean_text function to the entire job_dataset excluding 'advertiserurl'
+        columns_to_clean = ['company', 'jobid', 'jobtitle', 'Skills']
+        for column in columns_to_clean:
+            if column != 'advertiserurl':
+                job_dataset[column] = job_dataset[column].map(clean_text)
         return job_dataset 
     except Exception as e:
         st.error("Error loading job dataset: " + str(e))
@@ -177,8 +180,9 @@ def main():
                     st.write(f"Average Similarity Score: {average_similarity_score :.4f}")
 
                     # Display recommended jobs in a table
+                    # Display recommended jobs in a table
                     st.subheader("Top 10 Recommended Jobs Using Word2Vec:")
-                    table_data = [{"Job Title": job, "Company": company, "Similarity Score": score} for job, company, score in zip(top_n_jobs['jobtitle'], top_n_jobs['company'], top_n_jobs['similarity_score'])]
+                    table_data = [{"Job Title": job, "Company": company, "Advertiser URL": url} for job, company, url in zip(top_n_jobs['jobtitle'], top_n_jobs['company'], top_n_jobs['advertiserurl'])]
                     st.table(pd.DataFrame(table_data, index=range(1, 11)))
 
                     #Plot the line chart
@@ -191,8 +195,10 @@ def main():
                     ax.tick_params(axis='x', rotation=45)
                     plt.tight_layout()
                     st.pyplot(fig)
-
-                    st.write("**Your feedback or suggestions for improvement are important to us, please fill out our [feedback form](https://forms.gle/ddGeJRrkuTosLww58).**")
+                    
+                    st.write("If you have any feedback or suggestions for improvement, please fill out our [feedback form](https://forms.gle/ddGeJRrkuTosLww58).")
+    
 
 if __name__ == "__main__":
     main()
+
