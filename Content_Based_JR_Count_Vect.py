@@ -90,9 +90,9 @@ def load_job_dataset():
         # Load job data from GitHub
         job_data = process_github_zip(github_zip_url, 'dice_com-job_us_sample.csv')
         
-        job_dataset = job_data[['company', 'jobid', 'jobtitle','jobdescription', 'skills']].copy()
+        job_dataset = job_data[['company', 'jobid', 'jobtitle','jobdescription', 'skills', 'advertiserurl']].copy()
         # Check for null values in specific columns
-        null_values = job_dataset[['company', 'jobid', 'jobtitle', 'jobdescription', 'skills']].isnull().sum()
+        null_values = job_dataset[['company', 'jobid', 'jobtitle', 'jobdescription', 'skills', 'advertiserurl']].isnull().sum()
         print("Null values in each column:")
         print(null_values)
         # Remove NA values from job profile
@@ -101,8 +101,11 @@ def load_job_dataset():
         job_dataset['Skills'] = job_dataset['skills'] + ';' + job_dataset['jobdescription']  # Combine 'skills' and 'jobdescription' columns
         # Drop redundant columns
         job_dataset.drop(columns=['skills', 'jobdescription'], inplace=True)
-        # Apply clean_text function to the entire job_dataset
-        job_dataset = job_dataset.map(clean_text)
+        # Apply clean_text function to the entire job_dataset excluding 'advertiserurl'
+        columns_to_clean = ['company', 'jobid', 'jobtitle', 'Skills']
+        for column in columns_to_clean:
+            if column != 'advertiserurl':
+                job_dataset[column] = job_dataset[column].map(clean_text)
         return job_dataset 
     except Exception as e:
         st.error("Error loading job dataset: " + str(e))
@@ -110,7 +113,7 @@ def load_job_dataset():
 
 # Main function
 def main():
-    st.image("https://raw.githubusercontent.com/Deke8521/JR-System/main/Screenshot%202024-04-28%20205652.png", use_column_width=True, width=100)
+    st.image("https://raw.githubusercontent.com/Deke8521/JR-System/main/Screenshot%202024-04-28%20205652.png")
    
     st.title("Job Recommendation App")
     
@@ -170,38 +173,49 @@ def main():
 
             
                 # Rank job titles based on similarity scores
-                recommended_jobs = [(job_dataset.iloc[i]['jobtitle'], job_dataset.iloc[i]['company'], similarities[0][i]) for i in range(len(job_descriptions))]
+                
+                # Rank job titles based on similarity scores
+                recommended_jobs = [(job_dataset.iloc[i]['jobtitle'], job_dataset.iloc[i]['company'], job_dataset.iloc[i]['advertiserurl'], similarities[0][i]) for i in range(len(job_descriptions))]
 
-                recommended_jobs.sort(key=lambda x: x[2], reverse=True)
+                recommended_jobs.sort(key=lambda x: x[3], reverse=True)
 
-                sorted_jobs = sorted(recommended_jobs, key=lambda x: x[2], reverse=True)[:10]
-
+                sorted_jobs = sorted(recommended_jobs, key=lambda x: x[3], reverse=True)[:10]
                 # Calculate average similarity score
-                total_similarity_score = sum(score for _, _, score in sorted_jobs)
+                total_similarity_score = sum(score for _, _, _, score in sorted_jobs)
                 average_similarity_score = total_similarity_score / len(sorted_jobs)
                 st.write(f"Average Similarity Score: {average_similarity_score:.4f}")
-                
+               
                 # Display recommended jobs in a table
                 st.subheader("Top 10 Recommended Jobs using Count Vectorizer:")
-                table_data = [{"Job Title": job, "Company": company, "Similarity Score": score} for job, company, score in sorted_jobs]
+                table_data = [{"Job Title": job, "Company": company, "Advertiser URL": url} for job, company, url, _ in sorted_jobs]
                 st.table(pd.DataFrame(table_data, index=range(1, 11)))
+
 
                 # Plot the line plot
                 st.header("Line Plot Showing the Similarity Scores for Recommended Jobs using Count Vectorizer")
-                job_titles = [job for job, _, _ in sorted_jobs]
-                similarity_scores = [score for _, _, score in sorted_jobs]
+                job_titles = [job for job, _, _, _ in sorted_jobs]
+                similarity_scores = [score for _, _, _,  score in sorted_jobs]
                 recommended_jobs_df = pd.DataFrame({'Job Title': job_titles, 'Similarity Score': similarity_scores})
 
     # Create a line plot
+                # Create a line plot
                 fig, ax = plt.subplots(figsize=(10, 6))
                 ax.plot(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'], marker='o')
+
+                # Set labels and title
                 ax.set_xlabel('Job Title')
                 ax.set_ylabel('Similarity Score')
                 ax.set_title('Similarity Scores for Recommended Jobs using Count Vectorizer')
+
+                # Rotate x-axis labels for better readability
                 ax.tick_params(axis='x', rotation=45)
+
+                # Ensure tight layout
                 plt.tight_layout()
+
                 # Display the plot
                 st.pyplot(fig)
+
 
 if __name__ == "__main__":
     main()
