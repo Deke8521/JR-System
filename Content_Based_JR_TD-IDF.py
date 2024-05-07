@@ -189,13 +189,6 @@ def main():
                 # Adjust the width of the bars
                 bar_width = 0.3  # Adjust this value to make the bars thinner or thicker
 
-                # Plot the bars with logarithmic scale
-                bars = ax.bar(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'],  width=bar_width)
-
-                # Set logarithmic scale for y-axis
-                ax.set_yscale('log')
-
-
                 # Set labels and title
                 ax.set_xlabel('Job Title')
                 ax.set_ylabel('Similarity Score')
