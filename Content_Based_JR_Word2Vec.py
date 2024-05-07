@@ -186,16 +186,24 @@ def main():
                     st.table(pd.DataFrame(table_data, index=range(1, 11)))
 
                     #Plot the line chart
-                    st.header("Line Chart Showing the Similarity Scores for Recommended Jobs Using Word2Vec")
+                    st.header("Bar Chart Showing the Similarity Scores for Recommended Jobs Using Word2Vec")
                     fig, ax = plt.subplots(figsize=(10, 6))
-                    ax.plot(top_n_jobs['jobtitle'], top_n_jobs['similarity_score'], marker='o')
+                    ax.bar(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'])
+                    
+                    # Set labels and title
                     ax.set_xlabel('Job Title')
                     ax.set_ylabel('Similarity Score')
-                    ax.set_title('Similarity Scores for Recommended Jobs')
-                    ax.tick_params(axis='x', rotation=45)
-                    plt.tight_layout()
-                    st.pyplot(fig)
+                    ax.set_title('Similarity Scores for Recommended Jobs using Word2Vec')
                     
+                    # Rotate x-axis labels for better readability
+                    ax.tick_params(axis='x', rotation=45)
+                    
+                    # Ensure tight layout
+                    plt.tight_layout()
+                    
+                    # Display the plot
+                    st.pyplot(fig)
+                                        
                     st.write("If you have any feedback or suggestions for improvement, please fill out our [feedback form](https://forms.gle/ddGeJRrkuTosLww58).")
     
 
