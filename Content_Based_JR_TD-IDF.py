@@ -179,22 +179,25 @@ def main():
 
                 # Plot the dot plot
                 st.header("Dot Plot Showing the Similarity Scores for Recommended Jobs using TF-IDF")
+                job_titles = [job for job, _, _, _ in sorted_jobs]
+                similarity_scores = [score for _, _, _, score in sorted_jobs]
+                advertiser_urls = [url for _, _, url, _ in sorted_jobs]
+                recommended_jobs_df = pd.DataFrame({'Job Title': job_titles, 'Similarity Score': similarity_scores, 'Advertiser URL': advertiser_urls})
                 fig, ax = plt.subplots(figsize=(10, 6))
-                
-                # Plot the dots
-                dots = ax.scatter(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'], color='skyblue', s=100)
-                
+                ax.scatter(recommended_jobs_df['Job Title'], recommended_jobs_df['Similarity Score'])
+            
+
                 # Set labels and title
                 ax.set_xlabel('Job Title')
                 ax.set_ylabel('Similarity Score')
                 ax.set_title('Similarity Scores for Recommended Jobs using TF-IDF')
-                
+
                 # Rotate x-axis labels for better readability
                 ax.tick_params(axis='x', rotation=45)
-                
+
                 # Ensure tight layout
                 plt.tight_layout()
-                
+
                 # Display the plot
                 st.pyplot(fig)
 
